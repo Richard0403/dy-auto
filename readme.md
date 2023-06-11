@@ -1,13 +1,11 @@
 
 <h1 align="center">dy-auto</h1>
 
-<p align="center">✨ 抖音自动生成视频、字幕、自动上传发布✨</p>
-
+<p align="center"><h2 align="center">✨ 抖音自动生成视频、字幕、自动上传发布✨</h2></p>
 <p align="center">
 <a href="https://github.com/Richard0403/dy-auto/dy-auto/LICENSE">
-<img src="https://img.shields.io/github/license/Richard0403/dy-auto">
+<img src="https://img.shields.io/badge/license-MIT-blue.svg">
 </a>
-
 <a href="https://github.com/Richard0403/dy-auto">
 <img src="https://img.shields.io/badge/python-v3.10.11-orange">
 </a></p>
@@ -24,7 +22,6 @@
 <a href="https://github.com/Richard0403/dy-auto">
 <img src="https://img.shields.io/github/issues-closed/Richard0403/dy-auto?style=social">
 </a></p>
-
 
 ## 录屏效果
 
