@@ -101,4 +101,4 @@ pip install torch -f https://download.pytorch.org/whl/torch_stable.html
 3. **可实现多个账号循环上传**
 
 ## 声明
-<h3>本项目只做个人学习研究之用，不得用于商业用途！</h3>
+<h3>本项目只做个人学习研究之用，不得用于商业用途！更不可用于违反法律道德商业等不良用途，使用者责任自负！</h3>
