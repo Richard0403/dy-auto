@@ -80,9 +80,7 @@ https://github.com/Richard0403/dy-auto/assets/14147304/21400a42-9296-4956-9517-c
 
 
 ## 项目执行流程
-![img.png](img.png)
-
-
+![img](https://github.com/Richard0403/dy-auto/assets/14147304/1101bc20-4d80-4a6f-9103-babfe5982299)
 
 ## 注意 
 **1.文案和图片的使用是随机获取的**
