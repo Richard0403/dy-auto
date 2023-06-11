@@ -4,7 +4,7 @@
 <p align="center">✨ 抖音自动生成视频、字幕、自动上传发布✨</p>
 
 <p align="center">
-<a href="https://github.com/Richard0403/dy-auto/LICENSE">
+<a href="https://github.com/Richard0403/dy-auto/dy-auto/LICENSE">
 <img src="https://img.shields.io/github/license/Richard0403/dy-auto">
 </a>
 
