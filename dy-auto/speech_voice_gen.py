@@ -16,8 +16,8 @@ class VoiceGen:
         if os.path.exists(self.output):
             return self.output
 
-        speech_key = "9475a2aad05e47b2836eb22f36133d5d"
-        service_region = "eastus"
+        speech_key = "speech studio 申请的key"
+        service_region = "speech studio 申请的地域"
 
         speech_config = speechsdk.SpeechConfig(subscription=speech_key, region=service_region)
         # Note: the voice setting will not overwrite the voice element in input SSML.
