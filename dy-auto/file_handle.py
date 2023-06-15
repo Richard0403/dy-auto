@@ -65,6 +65,42 @@ class FileHandle():
             os.rename(srcFile, os.path.join(parentFile, target_pic_name))
         return sub_folder_name
 
+    def get_current_pic(self, pic_source_list, temp_pic_folder_path):
+        # 先清理掉原来的
+        if os.path.exists(temp_pic_folder_path):
+            shutil.rmtree(temp_pic_folder_path)
+        os.makedirs(temp_pic_folder_path)
+
+        for image_file_path in pic_source_list:
+            # 复制到临时文件夹
+            shutil.copy(image_file_path, temp_pic_folder_path)
+            new_image_file_path = os.path.join(temp_pic_folder_path, os.path.basename(image_file_path))
+            # 读取图片并计算宽高比
+            try:
+                img = Image.open(new_image_file_path)
+                w, h = img.size
+                ratio = w / h
+
+                # 计算目标尺寸
+                target_w, target_h = (1080, 1920) if ratio > 1080 / 1920 else (w, w * 1920 / 1080)
+                target_x, target_y = (w - target_w) // 2, (h - target_h) // 2
+
+                # 切割图片并保存为jpeg格式
+                cropped_img = img.crop((target_x, target_y, target_x + target_w, target_y + target_h))
+
+                cropped_img.convert('RGB').save(new_image_file_path, format='JPEG', quality=95)
+                img.close()
+            except:
+                os.remove(new_image_file_path)
+        # 按照顺序重新命名
+        result_pics = os.listdir(temp_pic_folder_path)
+        for k in range(0, len(result_pics)):
+            srcFile = os.path.join(temp_pic_folder_path, result_pics[k])
+            target_pic_name = "pic_%04d__.jpeg" % k
+            parentFile = os.path.abspath(os.path.join(srcFile, os.pardir))
+            os.rename(srcFile, os.path.join(parentFile, target_pic_name))
+
+
     def get_random_audio(self, temp_audio_folder_path):
         if os.path.exists(temp_audio_folder_path):
             shutil.rmtree(temp_audio_folder_path)

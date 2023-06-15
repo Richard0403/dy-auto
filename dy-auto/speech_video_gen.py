@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+import array
 import os
 import random
 
@@ -75,6 +75,21 @@ class SpeechGenControl:
             video_path = video.gen_video()
             print('生成video====' + video_path)
             return video_path, title, final_text
+
+    def gen_current_speech(self, title: str, content: str, pic_source_list) -> tuple[str, str, str]:
+
+        voice_gen = VoiceGen(self.voice_folder, title + content[0:10], content)
+        voice_path = voice_gen.gen_voice()
+        print('生成voice====' + voice_path)
+
+        handle = FileHandle()
+        handle.get_current_pic(pic_source_list, self.temp_pic_folder)
+
+        video = VideoGen(self.temp_video_folder, voice_path, self.temp_pic_folder, title)
+        video_path = video.gen_video()
+        print('生成video====' + video_path)
+        return video_path, title, content
+
 
 
 if __name__ == '__main__':
