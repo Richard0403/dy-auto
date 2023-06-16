@@ -5,6 +5,7 @@ import asyncio
 import shutil
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import QThread, pyqtSignal
 from PyQt5.QtWidgets import QMessageBox
 from playwright.async_api import async_playwright
 
@@ -15,6 +16,7 @@ from speech_video_gen import SpeechGenControl
 class Ui_Form(object):
 
     def __init__(self):
+        self.checked = False
         self.pic_list = None
 
     def setupUi(self, Form):
@@ -88,7 +90,7 @@ class Ui_Form(object):
 
     def startGen(self):
         print("start Gen")
-        checked: bool = self.isUploadCheck.isChecked()
+        self.checked: bool = self.isUploadCheck.isChecked()
         title_str: str = self.titleEdit.text()
         content_str: str = self.contentEdit.toPlainText()
 
@@ -107,22 +109,44 @@ class Ui_Form(object):
         self.selectPicBtn.setEnabled(False)
         self.startBtn.setEnabled(False)
         self.startBtn.setText("正在处理中...")
-        speech_gen = SpeechGenControl()
-        result_video_path, title, content = speech_gen.gen_current_speech(title_str, content_str, self.pic_list)
-        # upload
-        if checked:
-            asyncio.run(self.upload_dy(title, result_video_path))
 
+        self.thread = WorkThread(title_str, content_str, self.pic_list)
+        self.thread.trigger.connect(self.video_handled)
+        self.thread.start()
+
+    def video_handled(self, result_video_path, title, content):
         self.selectPicBtn.setEnabled(True)
         self.startBtn.setEnabled(True)
         self.startBtn.setText("开始")
         msg_box = QMessageBox(QMessageBox.NoIcon, '完成', '视频生成完毕，路径地址==' + result_video_path)
         msg_box.exec_()
 
-    async def upload_dy(self, title, result_video_path):
-        async with async_playwright() as playwright:
-            speech_control = SpeechControl()
-            await speech_control.upload(playwright, title, result_video_path)
+        asyncio.run(self.upload_video(result_video_path, title, content))
+
+    async def upload_video(self, result_video_path, title, content):
+        if self.checked:
+            async with async_playwright() as playwright:
+                speech_control = SpeechControl()
+                await speech_control.upload(playwright, title, result_video_path)
+        pass
+
+
+class WorkThread(QThread):
+    trigger = pyqtSignal(str, str, str)
+
+    def __init__(self, title_str, content_str, pic_list):
+        super(WorkThread, self).__init__()
+        self.title_str = title_str
+        self.content_str = content_str
+        self.pic_list = pic_list
+        pass
+
+    def run(self):
+        speech_gen = SpeechGenControl()
+        result_video_path, title, content = speech_gen.gen_current_speech(self.title_str, self.content_str,
+                                                                          self.pic_list)
+        self.trigger.emit(result_video_path, title, content)
+        pass
 
 
 if __name__ == "__main__":

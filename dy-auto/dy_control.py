@@ -70,7 +70,7 @@ class DyControl:
         temp_audio_path = handle.get_random_audio(self.temp_audio_folder)
         random_beauty_words = handle.get_random_words(self.beautiful_words)
 
-        video_gen = VideoGen(self.temp_video_folder, temp_audio_path, self.temp_pic_folder, "标题水印")
+        video_gen = VideoGen(self.temp_video_folder, temp_audio_path, self.temp_pic_folder, "标题水印", "文案内容")
         result_video_path = video_gen.gen_video()
 
         return {'title': random_pic_name + '->->' + random_beauty_words, 'video': result_video_path}

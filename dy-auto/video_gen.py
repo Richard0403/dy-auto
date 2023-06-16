@@ -8,12 +8,15 @@ import math
 from speech_srt_gen import  SpeechSrtGen
 from PIL import ImageFont
 
+from srt_correct import SrtCorrect
+
 
 class VideoGen:
-    def __init__(self, output_folder, audio_path, pic_path, water_print: str):
+    def __init__(self, output_folder, audio_path, pic_path, water_print: str, content: str):
         self.audio_path = audio_path
         self.pic_path = pic_path
         self.title_water_print = water_print
+        self.content = content
         self.output = output_folder + '/' + water_print + time.strftime("%YYYY-%mm-%dd-%HH-%mm-%SS",
                                                                         time.gmtime()) + '.mp4'  # 格式化时间
 
@@ -83,6 +86,11 @@ class VideoGen:
         srt_file = srt_gen.whisper_gen_srt()
         print("生成字幕成功" + srt_file)
 
+        # 字幕修正
+        srt_correct = SrtCorrect()
+        srt_correct.correct(srt_file, self.content)
+        print("生成修正完成")
+
         # 字幕添加到视频上
         srt_video_output = self.output.replace('.mp4', '_pic_water_srt_.mp4')
         font_path = "xiawu.ttf"
@@ -103,5 +111,5 @@ if __name__ == '__main__':
     time_struct = time.gmtime()  # 将时间戳转换为时间元组
     video_name = '../video/' + time.strftime("%YYYY-%mm-%dd-%HH-%mm-%SS", time_struct) + '.mp4'  # 格式化时间
 
-    video = VideoGen(video_name, 'audio/y700.wav', 'pic')
+    video = VideoGen(video_name, 'audio/y700.wav', 'pic', "水印内容", "视频文案内容")
     video.gen_video()

@@ -45,7 +45,7 @@ class SpeechGenControl:
 
                     handle = FileHandle()
                     handle.get_random_pic(self.pic_source_folder, self.temp_pic_folder)
-                    video = VideoGen(self.temp_video_folder, voice_path, self.temp_pic_folder, title)
+                    video = VideoGen(self.temp_video_folder, voice_path, self.temp_pic_folder, title, final_text)
                     video_path = video.gen_video()
                     print('生成video====' + video_path)
         pass
@@ -71,7 +71,7 @@ class SpeechGenControl:
 
             handle = FileHandle()
             handle.get_random_pic(self.pic_source_folder, self.temp_pic_folder)
-            video = VideoGen(self.temp_video_folder, voice_path, self.temp_pic_folder, title)
+            video = VideoGen(self.temp_video_folder, voice_path, self.temp_pic_folder, title, final_text)
             video_path = video.gen_video()
             print('生成video====' + video_path)
             return video_path, title, final_text
@@ -85,7 +85,7 @@ class SpeechGenControl:
         handle = FileHandle()
         handle.get_current_pic(pic_source_list, self.temp_pic_folder)
 
-        video = VideoGen(self.temp_video_folder, voice_path, self.temp_pic_folder, title)
+        video = VideoGen(self.temp_video_folder, voice_path, self.temp_pic_folder, title, content)
         video_path = video.gen_video()
         print('生成video====' + video_path)
         return video_path, title, content
