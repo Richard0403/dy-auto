@@ -21,7 +21,8 @@ class VoiceGen:
 
         speech_config = speechsdk.SpeechConfig(subscription=speech_key, region=service_region)
         # Note: the voice setting will not overwrite the voice element in input SSML.
-        speech_config.speech_synthesis_voice_name = "zh-CN-YunxiNeural"
+        # zh-CN-YunxiNeural
+        speech_config.speech_synthesis_voice_name = "zh-CN-YunfengNeural"
         audio_config = speechsdk.audio.AudioOutputConfig(filename=self.output)
         speech_synthesizer = speechsdk.SpeechSynthesizer(speech_config=speech_config, audio_config=audio_config)
 
